@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour
 {
-    
+
+    static public Slingshot S;
     //Fields set in the Unity inspector pane
     public GameObject prefabProjectile;
     public float velocityMult = 4f;
@@ -18,6 +19,9 @@ public class Slingshot : MonoBehaviour
 
     void Awake()
     {
+        //Seth the Slingshot singleton S
+        S = this;
+
         Transform launchPointTrans = transform.Find("LaunchPoint");
         launchPoint = launchPointTrans.gameObject;
         launchPoint.SetActive(false);
@@ -84,6 +88,7 @@ public class Slingshot : MonoBehaviour
             projectile.GetComponent<Rigidbody>().velocity = -mouseDelta * velocityMult;
             FollowCam.S.poi = projectile;
             projectile = null;
+            MissionDemolition.ShotFired();
         } 
         
     }
